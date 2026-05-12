@@ -862,7 +862,10 @@ else:
             if val == "CRITICAL": return "background-color:#1f0d0d; color:#f85149"
             if val == "WARNING":  return "background-color:#14110a; color:#e3b341"
             return "background-color:#0d2119; color:#3fb950"
-        styled = display_df.style.applymap(color_status, subset=["Overall_Status"])
+        try:
+            styled = display_df.style.map(color_status, subset=["Overall_Status"])
+        except AttributeError:
+            styled = display_df.style.applymap(color_status, subset=["Overall_Status"])
         st.dataframe(styled, use_container_width=True)
 
     # ── Download ──
